@@ -1,0 +1,20 @@
+#container {
+  text-align: center;
+}
+
+#container > div {
+  margin: 0 auto;
+}
+
+div {
+  text-align: left;
+}
+
+.menu {
+  display: inline-block;
+  padding: 0 3%;
+}
+
+#total-container {
+  padding: 0 40%;
+}
