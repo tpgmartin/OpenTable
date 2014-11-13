@@ -1,5 +1,4 @@
 # OpenTable front-end test
-========================
 
 ## Overview
 
