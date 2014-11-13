@@ -79,6 +79,7 @@ $(function() {
 
   $(':radio').change(function() {
     check_cheesecake()
+    no_prawn_salmon_combo()
     update_sum();
     check_choices();
   });
@@ -99,7 +100,7 @@ function update_sum () {
 }
 
 function check_choices () {
-  if ( $(':radio[name="person1starters"]:checked, :radio[name="person1mains"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2mains"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1mains"]:checked').length > 0 && $(':radio[name="person2mains"]:checked').length > 0 && $('#cheesecake').children(':checked').length < 2) {
+  if ( $(':radio[name="person1starters"]:checked, :radio[name="person1mains"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2mains"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1mains"]:checked').length > 0 && $(':radio[name="person2mains"]:checked').length > 0 && $('#cheesecake').children(':checked').length < 2 && !($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked')) && !($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked'))) {
     $('button').removeAttr('disabled');
   } else {
     $('button').attr('disabled','disabled')
@@ -110,5 +111,15 @@ function check_cheesecake() {
   if ($('#cheesecake').children(':checked').length > 1) {
     alert("There is only one piece of cheesecake left");
     check_choices();
+  };
+}
+
+function no_prawn_salmon_combo() {
+  if ($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked')) {
+    alert("Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.");
+    check_choices()
+  } else if ($(':radio[name=person2starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person2mains]', '#salmon-fillet').is(':checked')) {
+    alert("Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.");
+    check_choices()
   };
 }
