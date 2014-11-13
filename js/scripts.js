@@ -47,9 +47,6 @@ $(function() {
                             
     var setCheck = 
       function(e) {
-        if (e.type == 'keypress' && e.charCode != 32) {
-          return false;
-        }
           
       var obj = e.target;
             
@@ -63,17 +60,18 @@ $(function() {
     $.each(allRadios, function(i, val){        
       var label = $('label[for=' + $(this).attr("id") + ']');
          
-    $(this).bind('mousedown keydown', function(e){
+    $(this).bind('mousedown', function(e){
       setCurrent(e);
     });
         
-    label.bind('mousedown keydown', function(e){
+    label.bind('mousedown', function(e){
       e.target = $('#' + $(this).attr("for"));
       setCurrent(e);
     });
      
       $(this).bind('click', function(e){
-        setCheck(e);    
+        setCheck(e); 
+        update_sum();   
       });
     });
   });
