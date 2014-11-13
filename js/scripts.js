@@ -89,10 +89,15 @@ function update_sum () {
   $(':radio:checked').each(function () {
        sum += parseInt($(this).val());
    });
-  $('#total-container>h2').text('Total to Pay:');
-  $('#total').text('£' + String(sum.toFixed(2)));
-  if (!$('#total-container').hasClass('payment')) {
-    $('#total-container').addClass('payment').append('<button name="button" disabled>Pay</button>');
+  if (($(':radio').is(':checked'))) {
+    $('#total-container').css('display','inherit');   
+    $('#total-container>h2').text('Total to Pay:');
+    $('#total').text('£' + String(sum.toFixed(2)));
+    if (!$('#total-container').hasClass('payment')) {
+      $('#total-container').addClass('payment').append('<button name="button" disabled>Pay</button>');
+    } 
+  } else {
+    $('#total-container').css('display','none');
   }
 }
 
