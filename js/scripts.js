@@ -33,12 +33,52 @@ $(function() {
     update_sum();
   }
 
+  // Taken from 'Unselecting Radio Buttons with jQuery' 12Robots.com
+  // Deselect radio button onclick
+  $(function(){
+    var allRadios = $(':radio')
+    var radioChecked;
+    
+    var setCurrent = 
+      function(e) {
+        var obj = e.target;
+        radioChecked = $(obj).attr('checked');
+      }
+                            
+    var setCheck = 
+      function(e) {
+        if (e.type == 'keypress' && e.charCode != 32) {
+          return false;
+        }
+          
+      var obj = e.target;
+            
+      if (radioChecked) {
+        $(obj).attr('checked', false);
+      } else {
+        $(obj).attr('checked', true);
+      }
+    }    
+                             
+    $.each(allRadios, function(i, val){        
+      var label = $('label[for=' + $(this).attr("id") + ']');
+         
+    $(this).bind('mousedown keydown', function(e){
+      setCurrent(e);
+    });
+        
+    label.bind('mousedown keydown', function(e){
+      e.target = $('#' + $(this).attr("for"));
+      setCurrent(e);
+    });
+     
+      $(this).bind('click', function(e){
+        setCheck(e);    
+      });
+    });
+  });
+
   $(':radio').change(function() {
-  //   if (! $(this).is(':checked')) {
-  //     $(this).prop( "checked", true );
-  //   } else {
-  //     $(this).prop( "checked", false );
-  //   }
     limited_item = $(this).attr('name').substring(7);
     if ( limited.indexOf(limited_item) > -1) {
       check_stock(limited, limited_item);
@@ -48,6 +88,8 @@ $(function() {
     check_choices();
   });
 });
+
+// helper functions
 
 function update_sum () {
   var sum = 0;
