@@ -72,17 +72,14 @@ $(function() {
       $(this).bind('click', function(e){
         setCheck(e); 
         update_sum(); 
+        no_prawn_salmon_combo();
+        need_two_courses();
+        check_cheesecake();
         check_choices(); 
       });
     });
   });
 
-  $(':radio').change(function() {
-    check_cheesecake()
-    no_prawn_salmon_combo()
-    update_sum();
-    check_choices();
-  });
 });
 
 // helper functions
@@ -109,17 +106,37 @@ function check_choices () {
 
 function check_cheesecake() {
   if ($('#cheesecake').children(':checked').length > 1) {
-    alert("There is only one piece of cheesecake left");
-    check_choices();
+    if (!$('#container').children().hasClass('check-cheesecake')) {
+      $('#container').append('<div class="check-cheesecake warning">There is only one piece of cheesecake left.</div>')
+    }
+  } else {
+    $('.check-cheesecake').remove();
   };
+  check_choices();
 }
 
 function no_prawn_salmon_combo() {
   if ($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked')) {
-    alert("Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.");
-    check_choices()
+    if (!$('#container').children().hasClass('check-combo')) {
+      $('#container').append('<div class="check-combo warning">Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.</div>')
+    }
   } else if ($(':radio[name=person2starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person2mains]', '#salmon-fillet').is(':checked')) {
-    alert("Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.");
-    check_choices()
+    if (!$('#container').children().hasClass('check-combo')) {
+      $('#container').append('<div class="check-combo warning">Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.</div>')
+    }
+  } else {
+    $('.check-combo').remove();
   };
+  check_choices();
+}
+
+function need_two_courses() {
+  if (!($(':radio[name="person1starters"]:checked, :radio[name="person1mains"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2mains"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1mains"]:checked').length > 0 && $(':radio[name="person2mains"]:checked').length > 0)) {
+    if (!$('#container').children().hasClass('check-courses')) {
+      $('#container').append('<div class="check-combo warning">Each person must have at least two courses, one of which must be a main.</div>')
+    }
+  } else {
+    $('.check-courses').remove();
+  };
+  check_choices();
 }

@@ -18,3 +18,8 @@ div {
 #total-container {
   padding: 0 40%;
 }
+
+.warning {
+  text-align: center;
+  background-color: #f00;
+}
