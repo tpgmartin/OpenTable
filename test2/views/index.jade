@@ -22,17 +22,18 @@ block content
       form(method="post", action="#")
         h3 My Order
         div Total
+        .total-items
         .total-display
         button(type="submit", name="pay") Pay
-        
+
 
 block append add_script
   script.
     $(document).ready(function(){
       $('.menu-section-item').click(function(e){
-        var p = $(event.currentTarget).find('.price');
-        var current = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
-        $("#receipt .total-display").html( current + parseFloat(p.html()))
+        var p_price = $(event.currentTarget).find('.price');
+        var current_price = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
+        $("#receipt .total-display").html( (1.08 * (current_price + parseFloat(p_price.html()))).toFixed(2) )
       });
       $('form').submit(function(e){
         e.preventDefault()
