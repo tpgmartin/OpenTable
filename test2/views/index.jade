@@ -26,13 +26,17 @@ block content
         div Total
         .total-items
         .total-display
+        .total-tax
         button(type="submit", name="pay") Pay
 
 
 block append add_script
   script.
     $(document).ready(function(){
+      var items = [];
       $('.menu-section-item').click(function(e){
+        var name = $(event.currentTarget).find('.item-name').text();
+        items.push(name);
         var p_price = $(event.currentTarget).find('.price');
         //- Add counter to menu item
         var count = parseInt($(event.currentTarget).find(".count").text());
@@ -40,10 +44,16 @@ block append add_script
         count += 1;
         $(event.currentTarget).find(".count").html(count);
         var current_price = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
-        $("#receipt .total-display").html( (1.08 * (current_price + parseFloat(p_price.html()))).toFixed(2) )
+        $("#receipt .total-display").html( (current_price + parseFloat(p_price.html())).toFixed(2) )
+        $("#receipt .total-tax").html( (1.08 * parseFloat($("#receipt .total-display").html())).toFixed(2) )
+        $("#receipt .total-items").html(items.join(", "));
       });
       $('form').submit(function(e){
         e.preventDefault()
         $("#receipt .total-display").html('');
+        $("#receipt .total-tax").html('');
+        $("#receipt .total-items").html('');
+        $(".count").html('');
+        items = [];
       })
     });
