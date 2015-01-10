@@ -1,0 +1,98 @@
+{
+   "info":{
+      "name":"TastyBites",
+      "location":{
+         "latitude": 37.78,
+         "longitude": -122.41
+      }
+   },
+   "menu" : {
+     "sections":[
+        {
+           "title":"starters",
+           "items":[
+              {
+                 "name":"castelvetrano olives",
+                 "price":4.5,
+                 "description" : "Fresh green olives from Tuscany"
+              },
+              {
+                 "name":"charcuterie plate",
+                 "price":10,
+                 "description": "meat meat meat meat"
+              },
+              {
+                 "name":"grilled fig salad",
+                 "price":12,
+                 "quantity": 4,
+                 "description": ""
+              },
+              {
+                 "name":"butternut squash soup",
+                 "price":7,
+                 "description": "sage, creme fresh"
+              }
+           ]
+        },
+        {
+           "title":"entrées",
+           "items":[
+              {
+                 "name":"duck confit, roasted fingerling potatoes",
+                 "price":21.75,
+                 "quantity": 10,
+                 "description": "quack quack"
+              },
+              {
+                 "name":"risotto",
+                 "price":19,
+                 "description": "meyer lemon, grilled asparagus, eatible flowers"
+              },
+              {
+                 "name":"smoked black cod, tomatoes, spring onions ",
+                 "price":25
+              }
+           ]
+        },
+        {
+           "title":"desserts",
+           "items":[
+              {
+                 "name":"chocolate soufflé",
+                 "price":7,
+                 "description": "hot and goey"
+              },
+              {
+                 "name":"starwberry sorbet ",
+                 "price":4.20
+              },
+              {
+                 "name":"lavender crème brûlée",
+                 "price":5
+              }
+           ]
+        },
+        {
+           "title":"refreshments",
+           "items":[
+              {
+                 "name":"raspberry spritzer",
+                 "price":5
+              },
+              {
+                 "name":"ginger beer",
+                 "price":4
+              },
+              {
+                 "name":"four barrel drip coffee",
+                 "price":3.25
+              },
+              {
+                 "name":"sparkling water",
+                 "price":2.75
+              }
+           ]
+        }
+     ]     
+   }
+}

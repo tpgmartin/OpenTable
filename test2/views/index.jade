@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 #{restaurant.info.name}
+  ul.menu
+  -each section in restaurant.menu.sections
+    li.menu.menu-section
+      p.section-header= section.title
+      ul
+        -for item in section.items
+          li.menu-section-item
+            p 
+              span.item-name= item.name
+              span.currency $
+              span.price= item.price
+              
+              
+  #receipt
+    div
+      form(method="post", action="#")
+        h3 My Order
+        div Total
+        .total-display
+        button(type="submit", name="pay") Pay
+        
+
+block append add_script
+  script.
+    $(document).ready(function(){
+      $('.menu-section-item').click(function(e){
+        var p = $(event.currentTarget).find('.price');
+        var current = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
+        $("#receipt .total-display").html( current + parseFloat(p.html()))
+      });
+      $('form').submit(function(e){
+        e.preventDefault()
+        $("#receipt .total-display").html('');
+      })
+    });
