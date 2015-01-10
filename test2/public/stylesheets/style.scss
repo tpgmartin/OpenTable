@@ -21,10 +21,6 @@ li {
   p {
     padding: 10px;
 
-    &.description {
-      margin-top: 25px; 
-    }
-
     span {
 
     &.item-name {
@@ -44,6 +40,17 @@ li {
       clear: right;
     }
 
+    &.description {
+      float: left;
+      clear: left;
+    }
+
+    &.count {
+      float: right;
+      clear: right;
+    }
+
+
     }
 
     &.section-header {
@@ -59,6 +66,10 @@ li {
   
   &.menu-section-item {
     border-bottom: 1px solid black;
+
+    & p {
+      margin-bottom: 25px;
+    }
 
     &:last-child {
       border-bottom: none;

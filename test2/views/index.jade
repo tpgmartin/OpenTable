@@ -13,7 +13,9 @@ block content
               span.item-name= item.name
               span.price= item.price.toFixed(2)
               span.currency $
-            p.description= item.description
+            p
+              span.description= item.description
+              span.count= ""
 
               
               
@@ -32,6 +34,11 @@ block append add_script
     $(document).ready(function(){
       $('.menu-section-item').click(function(e){
         var p_price = $(event.currentTarget).find('.price');
+        //- Add counter to menu item
+        var count = parseInt($(event.currentTarget).find(".count").text());
+        count !== count ? count = 0 : count;
+        count += 1;
+        $(event.currentTarget).find(".count").html(count);
         var current_price = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
         $("#receipt .total-display").html( (1.08 * (current_price + parseFloat(p_price.html()))).toFixed(2) )
       });
