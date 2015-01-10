@@ -1,11 +1,76 @@
 body {
-  padding: 50px;
+  margin: 0 auto;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+
+h1 {
+  padding: 10px;
+  margin: inherit;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+
+  list-style: none;
+
+  p {
+    padding: 10px;
+
+    &.description {
+      margin-top: 25px; 
+    }
+
+    span {
+
+    &.item-name {
+      font-weight: bold;
+      text-transform: capitalize;
+      float: left;
+      clear: left;
+    }
+
+    &.currency {
+      float: right;
+      margin: 0;
+    }
+
+    &.price {
+      float: right;
+      clear: right;
+    }
+
+    }
+
+    &.section-header {
+      color: #fff;
+      font-size: 2em;
+      text-transform: capitalize;
+      background-color: #0099FF;
+      margin: 0;
+    }
+
+
+  }
+  
+  &.menu-section-item {
+    border-bottom: 1px solid black;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
 }
 
 a {
   color: #00B7FF;
 }
+
 .currency {
   margin-left: 30px;
 }

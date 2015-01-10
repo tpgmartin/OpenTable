@@ -11,8 +11,10 @@ block content
           li.menu-section-item
             p 
               span.item-name= item.name
+              span.price= item.price.toFixed(2)
               span.currency $
-              span.price= item.price
+            p.description= item.description
+
               
               
   #receipt
