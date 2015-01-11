@@ -1,31 +1,38 @@
 $(function() {
 
+  var courses = [];
   for (var index in menu) {
+    if (courses.indexOf(menu[index].course) == -1) {
+      courses.push(menu[index].course);
+    }
+  }
+
+  for(var i=0; i<courses.length; i+=1) {
+    $('#container').append('<div class="menu" id=' + 
+    courses[i].replace(/\s+/g, '').toLowerCase() + '><h2>' + 
+    courses[i][0].toUpperCase() + courses[i].slice(1) + '</h2></div>');
+  }
+
+  for (var index in menu) {
+    var to_append = '<div id=' + 
+    menu[index].name.replace(/\s+/g, '-').toLowerCase() + '>' + 
+    '<input type="radio" name="person1'+ 
+    menu[index].course.replace(/\s+/g, '').toLowerCase() + '" value="'+ 
+    menu[index].price + '"> ' + 
+    'Person 1' + ' ' + '<input type="radio" name="person2'+ 
+    menu[index].course.replace(/\s+/g, '').toLowerCase() + '" value="'+
+     menu[index].price + '"> ' + 
+    'Person 2' + ' ' + menu[index].name + 
+    ' £' + String(menu[index].price.toFixed(2)) + '<br><br>' + '</div>'
     if (menu[index].course === 'Starters') {
-      var name = 'starters';
-      var value = menu[index].price;
-      var to_append = '<div id=' + menu[index].name.replace(/\s+/g, '-').toLowerCase() + '>' + '<input type="radio" name="person1'+ name + '" value="'+ value + '"> ' + 
-      'Person 1' + ' ' + '<input type="radio" name="person2'+ name + '" value="'+ value + '"> ' + 
-      'Person 2' + ' ' + menu[index].name + ' &#163;' + String(menu[index].price.toFixed(2)) + '<br><br>' + '</div>'
       $('#starters').append(to_append);
     } else if (menu[index].course === 'Main course') {
-      var name = 'mains';
-      var value = menu[index].price;
-      var to_append = '<div id=' + menu[index].name.replace(/\s+/g, '-').toLowerCase() + '>' + '<input type="radio" name="person1'+ name + '" value="'+ value + '"> ' + 
-      'Person 1' + ' ' + '<input type="radio" name="person2'+ name + '" value="'+ value + '"> ' + 
-      'Person 2' + ' ' + menu[index].name + ' &#163;' + String(menu[index].price.toFixed(2)) + '<br><br>' + '</div>'
-      $('#mains').append(to_append);
+      $('#maincourse').append(to_append);
     } else if (menu[index].course === 'Desserts') {
-      var name = 'desserts';
-      var value = menu[index].price;
-      var to_append = '<div id=' + menu[index].name.replace(/\s+/g, '-').toLowerCase() + '>' + '<input type="radio" name="person1'+ name + '" value="'+ value + '"> ' + 
-      'Person 1' + ' ' + '<input type="radio" name="person2'+ name + '" value="'+ value + '"> ' + 
-      'Person 2' + ' ' + menu[index].name + ' &#163;' + String(menu[index].price.toFixed(2)) + '<br><br>' + '</div>'
       $('#desserts').append(to_append);
     } else {
       console.log('Error');
     }
-
   }
 
   // Adapted from 'Unselecting Radio Buttons with jQuery' 12Robots.com
@@ -33,37 +40,29 @@ $(function() {
   $(function(){
     var allRadios = $(':radio')
     var radioChecked;
-    
     var setCurrent = 
       function(e) {
         var obj = e.target;
         radioChecked = $(obj).attr('checked');
       }
-                            
     var setCheck = 
       function(e) {
-          
       var obj = e.target;
-            
       if (radioChecked) {
         $(obj).attr('checked', false);
       } else {
         $(obj).attr('checked', true);
       }
     }    
-                             
     $.each(allRadios, function(i, val){        
       var label = $('label[for=' + $(this).attr("id") + ']');
-         
     $(this).bind('mousedown', function(e){
       setCurrent(e);
     });
-        
     label.bind('mousedown', function(e){
       e.target = $('#' + $(this).attr("for"));
       setCurrent(e);
     });
-     
       $(this).bind('click', function(e){
         setCheck(e); 
         update_sum(); 
@@ -86,10 +85,10 @@ function update_sum () {
    });
   if (($(':radio').is(':checked'))) {
     $('#total-container').css('display','inherit');   
-    $('#total-container>h2').text('Total to Pay:');
     $('#total').text('£' + String(sum.toFixed(2)));
     if (!$('#total-container').hasClass('payment')) {
-      $('#total-container').addClass('payment').append('<button name="button" disabled>Pay</button>');
+      $('#total-container').addClass('payment')
+      .append('<button name="button" disabled>Pay</button>');
     } 
   } else {
     $('#total-container').css('display','none');
@@ -97,7 +96,7 @@ function update_sum () {
 }
 
 function check_choices () {
-  if ( $(':radio[name="person1starters"]:checked, :radio[name="person1mains"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2mains"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1mains"]:checked').length > 0 && $(':radio[name="person2mains"]:checked').length > 0 && $('#cheesecake').children(':checked').length < 2 && !($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked')) && !($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked'))) {
+  if (!$('#container').children().hasClass('check-cheesecake') && !$('#container').children().hasClass('check-combo') && !$('#container').children().hasClass('check-courses')) {
     $('button').removeAttr('disabled');
   } else {
     $('button').attr('disabled','disabled')
@@ -116,11 +115,11 @@ function check_cheesecake() {
 }
 
 function no_prawn_salmon_combo() {
-  if ($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1mains]', '#salmon-fillet').is(':checked')) {
+  if ($(':radio[name=person1starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person1maincourse]', '#salmon-fillet').is(':checked')) {
     if (!$('#container').children().hasClass('check-combo')) {
       $('#container').append('<div class="check-combo warning">Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.</div>')
     }
-  } else if ($(':radio[name=person2starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person2mains]', '#salmon-fillet').is(':checked')) {
+  } else if ($(':radio[name=person2starters]', '#prawn-cocktail').is(':checked') && $(':radio[name=person2maincourse]', '#salmon-fillet').is(':checked')) {
     if (!$('#container').children().hasClass('check-combo')) {
       $('#container').append('<div class="check-combo warning">Pierre the snobby waiter will not let you have prawn cocktail and salmon fillet in the same meal.</div>')
     }
@@ -131,9 +130,9 @@ function no_prawn_salmon_combo() {
 }
 
 function need_two_courses() {
-  if (!($(':radio[name="person1starters"]:checked, :radio[name="person1mains"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2mains"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1mains"]:checked').length > 0 && $(':radio[name="person2mains"]:checked').length > 0)) {
+  if (!($(':radio[name="person1starters"]:checked, :radio[name="person1maincourse"]:checked, :radio[name="person1desserts"]:checked').length >= 2 && $(':radio[name="person2starters"]:checked, :radio[name="person2maincourse"]:checked, :radio[name="person2desserts"]:checked').length >= 2 && $(':radio[name="person1maincourse"]:checked').length > 0 && $(':radio[name="person2maincourse"]:checked').length > 0)) {
     if (!$('#container').children().hasClass('check-courses')) {
-      $('#container').append('<div class="check-combo warning">Each person must have at least two courses, one of which must be a main.</div>')
+      $('#container').append('<div class="check-courses warning">Each person must have at least two courses, one of which must be a main.</div>')
     }
   } else {
     $('.check-courses').remove();

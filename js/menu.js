@@ -6,7 +6,7 @@ menu = [
   },
   {
       course: 'Starters',
-      name: 'P\342t\351',
+      name: 'Pâté',
       price: 5
   },
   {
