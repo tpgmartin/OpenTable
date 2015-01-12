@@ -14,7 +14,11 @@ block content
               span.price= item.price.toFixed(2)
               span.currency $
             p
-              span.description= item.description
+              if item.quantity
+                span.description= item.description + ' (special)' 
+                span.quantity= ' ' + item.quantity
+              else
+                span.description= item.description
               span.count= ""
 
               
@@ -47,6 +51,10 @@ block append add_script
       var tip = 0;
       $('.menu-section-item').click(function(e){
         name = $(event.currentTarget).find('.item-name').text();
+        quantity = parseInt($(event.currentTarget).find('.quantity').text());
+        quantity !== quantity ? quantity = 0 : quantity;
+        quantity -= 1;     
+        $(event.currentTarget).find(".quantity").html(quantity);   
         items.push(name);
         p_price = $(event.currentTarget).find('.price');
         //- Add counter to menu item
