@@ -25,8 +25,18 @@ block content
         h3 My Order
         div Total
         .total-items
-        .total-display
-        .total-tax
+        p 
+          span Pre Tax &nbsp;
+          span.total-display
+        p
+          span Select Tip &nbsp;
+          select(name="tip")
+            each tip, i in restaurant.tips
+              option(value=i) #{tip}%
+          span.tip
+        p 
+          span With Tax &nbsp;
+          span.total-tax
         button(type="submit", name="pay") Pay
 
 
@@ -34,20 +44,27 @@ block append add_script
   script.
     $(document).ready(function(){
       var items = [];
+      var tip = 0;
       $('.menu-section-item').click(function(e){
-        var name = $(event.currentTarget).find('.item-name').text();
+        name = $(event.currentTarget).find('.item-name').text();
         items.push(name);
-        var p_price = $(event.currentTarget).find('.price');
+        p_price = $(event.currentTarget).find('.price');
         //- Add counter to menu item
-        var count = parseInt($(event.currentTarget).find(".count").text());
+        count = parseInt($(event.currentTarget).find(".count").text());
         count !== count ? count = 0 : count;
         count += 1;
         $(event.currentTarget).find(".count").html(count);
-        var current_price = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
+        current_price = $("#receipt .total-display").text().length ? parseFloat($("#receipt .total-display").text()) : 0
         $("#receipt .total-display").html( (current_price + parseFloat(p_price.html())).toFixed(2) )
-        $("#receipt .total-tax").html( (1.08 * parseFloat($("#receipt .total-display").html())).toFixed(2) )
+        $("#receipt .total-tax").html( (1.08 * (1 + 5 * parseFloat(tip)/100) * parseFloat($("#receipt .total-display").html())).toFixed(2) )
         $("#receipt .total-items").html(items.join(", "));
       });
+
+    $(document).on('change', 'select', function(e) {
+      tip = $(this).val();
+      $("#receipt .total-tax").html( (1.08 * (1 + 5 * parseFloat(tip)/100) * parseFloat($("#receipt .total-display").html())).toFixed(2) )
+    });
+
       $('form').submit(function(e){
         e.preventDefault()
         $("#receipt .total-display").html('');

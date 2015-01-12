@@ -1,4 +1,6 @@
 {
+  "tips":[0, 5, 10, 15, 20],
+
    "info":{
       "name":"TastyBites",
       "location":{
